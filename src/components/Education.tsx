@@ -22,7 +22,7 @@ const Education = () => {
       school: "Koneru Lakshmaiah College of Engineering",
       location: "Vijayawada, India",
       period: "2019 - 2023",
-      logo: "KL",
+      logo: "/KL logo.jpg",
       logoColor: "from-blue-500 to-purple-600",
       borderColor: "hover:border-blue-500",
       textColor: "text-blue-400",
