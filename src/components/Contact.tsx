@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
-import { Mail, Phone, MapPin, Send, Github, Linkedin, Download, User, MessageSquare, CheckCircle, AlertCircle, Loader } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Github, Linkedin, Instagram, Download, User, MessageSquare, CheckCircle, AlertCircle, Loader } from 'lucide-react';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    title: '',
     message: ''
   });
-  const [focusedField, setFocusedField] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [submitMessage, setSubmitMessage] = useState('');
@@ -29,7 +27,7 @@ const Contact = () => {
     e.preventDefault();
     
     // Basic validation
-    if (!formData.name.trim() || !formData.email.trim() || !formData.title.trim() || !formData.message.trim()) {
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
       setSubmitStatus('error');
       setSubmitMessage('Please fill in all fields.');
       return;
@@ -49,14 +47,14 @@ const Contact = () => {
 
     try {
       // EmailJS configuration
-      const serviceId = 'service_8zflr0k'; // Your actual service ID
-      const templateId = 'template_7i1oh9e'; // Your actual template ID
-      const publicKey = 'CHzbhgXvke8a9VIEO'; // Your actual public key
+      const serviceId = 'service_8zflr0k';
+      const templateId = 'template_7i1oh9e';
+      const publicKey = 'CHzbhgXvke8a9VIEO';
 
       const templateParams = {
         from_name: formData.name,
         from_email: formData.email,
-        subject: formData.title,
+        subject: `Message from ${formData.name}`,
         to_name: 'Jay Munagala',
         message: formData.message,
         reply_to: formData.email,
@@ -69,7 +67,7 @@ const Contact = () => {
       setSubmitMessage('Thank you! Your message has been sent successfully. I\'ll get back to you soon.');
       
       // Clear form
-      setFormData({ name: '', email: '', title: '', message: '' });
+      setFormData({ name: '', email: '', message: '' });
       
     } catch (error) {
       console.error('Email sending failed:', error);
@@ -79,37 +77,6 @@ const Contact = () => {
       setIsLoading(false);
     }
   };
-
-  const formFields = [
-    {
-      name: 'name',
-      label: 'Your Name',
-      type: 'input',
-      icon: User,
-      placeholder: 'Enter your full name'
-    },
-    {
-      name: 'email',
-      label: 'Email Address',
-      type: 'input',
-      icon: Mail,
-      placeholder: 'Enter your email'
-    },
-    {
-      name: 'title',
-      label: 'Title',
-      type: 'input',
-      icon: MessageSquare,
-      placeholder: 'What would you like to discuss?'
-    },
-    {
-      name: 'message',
-      label: 'Message',
-      type: 'textarea',
-      icon: Mail,
-      placeholder: 'Tell me about your project or just say hello...'
-    }
-  ];
 
   const socialLinks = [
     {
@@ -126,15 +93,13 @@ const Contact = () => {
       color: 'from-gray-600 to-gray-700',
       hoverColor: 'hover:shadow-gray-500/25'
     },
-    /* Resume download option - Hidden
     {
-      name: 'Resume',
-      icon: Download,
-      href: '#',
-      color: 'from-purple-500 to-purple-600',
-      hoverColor: 'hover:shadow-purple-500/25'
+      name: 'Instagram',
+      icon: Instagram,
+      href: 'https://www.instagram.com/jay_munagala?igsh=NmJma3ZtZ3lvamhw&utm_source=qr',
+      color: 'from-pink-500 to-rose-600',
+      hoverColor: 'hover:shadow-pink-500/25'
     }
-    */
   ];
 
   const contactInfo = [
@@ -203,100 +168,69 @@ const Contact = () => {
                 </p>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-8">
-                {formFields.map((field, index) => (
-                  <motion.div
-                    key={field.name}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1, duration: 0.6 }}
-                    className="relative group"
-                  >
-                    {/* Field Container */}
-                    <div className="relative">
-                      {field.type === 'input' ? (
-                        <input
-                          type={field.name === 'email' ? 'email' : 'text'}
-                          id={field.name}
-                          name={field.name}
-                          value={formData[field.name as keyof typeof formData]}
-                          onChange={handleInputChange}
-                          onFocus={() => setFocusedField(field.name)}
-                          onBlur={() => setFocusedField(null)}
-                          className={`
-                            w-full px-4 py-4 pl-12 bg-gray-900/80 backdrop-blur-sm border-2 rounded-2xl
-                            text-white placeholder-transparent transition-all duration-300 outline-none
-                            ${focusedField === field.name 
-                              ? 'border-blue-500 shadow-lg shadow-blue-500/20' 
-                              : 'border-gray-600 hover:border-gray-500'
-                            }
-                          `}
-                          placeholder={field.placeholder}
-                          required
-                        />
-                      ) : (
-                        <textarea
-                          id={field.name}
-                          name={field.name}
-                          value={formData[field.name as keyof typeof formData]}
-                          onChange={handleInputChange}
-                          onFocus={() => setFocusedField(field.name)}
-                          onBlur={() => setFocusedField(null)}
-                          rows={4}
-                          className={`
-                            w-full px-4 py-4 pl-12 bg-gray-900/80 backdrop-blur-sm border-2 rounded-2xl
-                            text-white placeholder-transparent transition-all duration-300 outline-none resize-none
-                            ${focusedField === field.name 
-                              ? 'border-blue-500 shadow-lg shadow-blue-500/20' 
-                              : 'border-gray-600 hover:border-gray-500'
-                            }
-                          `}
-                          placeholder={field.placeholder}
-                          required
-                        />
-                      )}
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Name Field */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+                    Your Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 bg-gray-900/80 backdrop-blur-sm border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none transition-colors duration-300"
+                    placeholder="Enter your full name"
+                    required
+                  />
+                </motion.div>
 
-                      {/* Icon */}
-                      <motion.div
-                        animate={{
-                          scale: focusedField === field.name ? 1.1 : 1,
-                          color: focusedField === field.name ? '#3b82f6' : '#9ca3af'
-                        }}
-                        className="absolute left-4 top-4 transition-colors duration-300"
-                      >
-                        <field.icon size={20} />
-                      </motion.div>
+                {/* Email Field */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1, duration: 0.6 }}
+                >
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 bg-gray-900/80 backdrop-blur-sm border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none transition-colors duration-300"
+                    placeholder="Enter your email"
+                    required
+                  />
+                </motion.div>
 
-                      {/* Floating Label */}
-                      <motion.label
-                        htmlFor={field.name}
-                        animate={{
-                          y: focusedField === field.name || formData[field.name as keyof typeof formData] 
-                            ? -24 : 16,
-                          x: focusedField === field.name || formData[field.name as keyof typeof formData] 
-                            ? 8 : 48,
-                          scale: focusedField === field.name || formData[field.name as keyof typeof formData] 
-                            ? 0.85 : 1,
-                          color: focusedField === field.name ? '#3b82f6' : '#9ca3af'
-                        }}
-                        transition={{ duration: 0.2, ease: "easeOut" }}
-                        className="absolute pointer-events-none font-medium origin-left"
-                      >
-                        {field.label}
-                      </motion.label>
-
-                      {/* Glow Effect */}
-                      {focusedField === field.name && (
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
-                          className="absolute inset-0 rounded-2xl bg-blue-500/10 blur-xl"
-                        />
-                      )}
-                    </div>
-                  </motion.div>
-                ))}
+                {/* Message Field */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, duration: 0.6 }}
+                >
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    rows={5}
+                    className="w-full px-4 py-3 bg-gray-900/80 backdrop-blur-sm border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none transition-colors duration-300 resize-none"
+                    placeholder="Tell me about your project or just say hello..."
+                    required
+                  />
+                </motion.div>
 
                 {/* Submit Button */}
                 <motion.button
@@ -304,16 +238,16 @@ const Contact = () => {
                   disabled={isLoading}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.6 }}
+                  transition={{ delay: 0.3, duration: 0.6 }}
                   whileHover={!isLoading ? { scale: 1.02, y: -2 } : {}}
                   whileTap={{ scale: 0.98 }}
-                  className={`group relative w-full py-4 rounded-2xl text-white font-semibold text-lg transition-all duration-300 overflow-hidden ${
+                  className={`group relative w-full py-4 rounded-xl text-white font-semibold text-lg transition-all duration-300 overflow-hidden ${
                     isLoading 
                       ? 'bg-gray-600 cursor-not-allowed' 
                       : 'bg-gradient-to-r from-blue-500 to-purple-600 hover:shadow-2xl hover:shadow-blue-500/25'
                   }`}
                 >
-                  <span className="relative z-10 flex items-center justify-center min-h-[28px]">
+                  <span className="relative z-10 flex items-center justify-center">
                     {isLoading ? (
                       <>
                         <Loader size={20} className="mr-2 animate-spin" />
@@ -322,12 +256,7 @@ const Contact = () => {
                     ) : (
                       <>
                         Send Message
-                        <motion.div
-                          whileHover={{ x: 5 }}
-                          transition={{ type: "spring", stiffness: 400 }}
-                        >
-                          <Send size={20} className="ml-2" />
-                        </motion.div>
+                        <Send size={20} className="ml-2" />
                       </>
                     )}
                   </span>
@@ -348,7 +277,7 @@ const Contact = () => {
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className={`flex items-center p-4 rounded-2xl border ${
+                    className={`flex items-center p-4 rounded-xl border ${
                       submitStatus === 'success' 
                         ? 'bg-green-900/20 border-green-500/30 text-green-400' 
                         : 'bg-red-900/20 border-red-500/30 text-red-400'
@@ -411,8 +340,8 @@ const Contact = () => {
                     <motion.a
                       key={social.name}
                       href={social.href}
-                      target={social.href.startsWith('http') ? '_blank' : undefined}
-                      rel={social.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       initial={{ opacity: 0, scale: 0.5 }}
                       whileInView={{ opacity: 1, scale: 1 }}
                       transition={{ delay: index * 0.1, duration: 0.6 }}
@@ -431,37 +360,41 @@ const Contact = () => {
                 </div>
               </div>
 
-              {/* Inspirational Quote */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.8 }}
-                className="relative p-8 bg-gray-900/40 backdrop-blur-sm rounded-2xl border border-gray-700/50 overflow-hidden"
-              >
-                {/* Background decoration */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-2xl"></div>
-                
-                <div className="relative z-10">
-                  <blockquote className="relative">
-                    <div className="absolute -top-2 -left-2 text-4xl text-blue-400/30 font-serif">"</div>
-                    <p className="text-2xl font-serif italic text-gray-100 leading-relaxed pl-6">
-                      Aspiring Software Engineer and Data Analyst ready to bring data insights and scalable solutions to forward-thinking teams.
-                    </p>
-                    <div className="absolute -bottom-2 -right-2 text-4xl text-purple-400/30 font-serif">"</div>
-                  </blockquote>
-                  <div className="mt-6 w-20 h-0.5 bg-gradient-to-r from-blue-500 to-purple-600"></div>
-                </div>
-              </motion.div>
             </motion.div>
           </div>
         </div>
+
+        {/* Centered Inspirational Quote */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.8 }}
+          className="text-center mt-16 mb-12"
+        >
+          <div className="max-w-4xl mx-auto relative p-8 bg-gray-900/40 backdrop-blur-sm rounded-2xl border border-gray-700/50 overflow-hidden">
+            {/* Background decoration */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-2xl"></div>
+            <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-2xl"></div>
+            
+            <div className="relative z-10">
+              <blockquote className="relative text-center">
+                <div className="absolute -top-2 -left-2 text-4xl text-blue-400/30 font-serif">"</div>
+                <p className="text-xl sm:text-2xl md:text-3xl font-serif italic text-gray-100 leading-relaxed px-6">
+                  Aspiring Software Engineer and Data Analyst ready to bring data insights and scalable solutions to forward-thinking teams.
+                </p>
+                <div className="absolute -bottom-2 -right-2 text-4xl text-purple-400/30 font-serif">"</div>
+              </blockquote>
+              <div className="mt-6 w-24 h-0.5 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto"></div>
+            </div>
+          </div>
+        </motion.div>
 
         {/* Footer */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.8 }}
-          className="text-center mt-20 pt-12 border-t border-gray-700/50"
+          transition={{ delay: 0.9, duration: 0.8 }}
+          className="text-center mt-12 pt-12 border-t border-gray-700/50"
         >
           <p className="text-gray-400 mb-4">
             © 2025 Jaya Prakash Reddy Munagala. Built with React, TypeScript, and lots of ☕
