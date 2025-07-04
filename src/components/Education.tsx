@@ -76,7 +76,15 @@ const Education = () => {
                       whileHover={{ scale: 1.1, rotate: 5 }}
                       className={`flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br ${edu.logoColor} rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300`}
                     >
-                      <span className="text-white font-bold text-lg sm:text-xl">{edu.logo}</span>
+                      {edu.logo.startsWith('/') ? (
+                        <img 
+                          src={edu.logo} 
+                          alt={`${edu.school} logo`}
+                          className="w-16 h-16 sm:w-20 sm:h-20 object-contain rounded-xl"
+                        />
+                      ) : (
+                        <span className="text-white font-bold text-lg sm:text-xl">{edu.logo}</span>
+                      )}
                     </motion.div>
 
                     {/* Content */}
