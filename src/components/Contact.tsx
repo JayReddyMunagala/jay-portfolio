@@ -1,24 +1,83 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, Github, Linkedin, Download, User, MessageSquare } from 'lucide-react';
+import emailjs from '@emailjs/browser';
+import { Mail, Phone, MapPin, Send, Github, Linkedin, Download, User, MessageSquare, CheckCircle, AlertCircle, Loader } from 'lucide-react';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    title: '',
     message: ''
   });
   const [focusedField, setFocusedField] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitMessage, setSubmitMessage] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+    // Clear submit status when user starts typing again
+    if (submitStatus !== 'idle') {
+      setSubmitStatus('idle');
+      setSubmitMessage('');
+    }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
+    
+    // Basic validation
+    if (!formData.name.trim() || !formData.email.trim() || !formData.title.trim() || !formData.message.trim()) {
+      setSubmitStatus('error');
+      setSubmitMessage('Please fill in all fields.');
+      return;
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setSubmitStatus('error');
+      setSubmitMessage('Please enter a valid email address.');
+      return;
+    }
+
+    setIsLoading(true);
+    setSubmitStatus('idle');
+    setSubmitMessage('');
+
+    try {
+      // EmailJS configuration
+      const serviceId = 'service_8zflr0k'; // Your actual service ID
+      const templateId = 'template_7i1oh9e'; // Your actual template ID
+      const publicKey = 'CHzbhgXvke8a9VIEO'; // Your actual public key
+
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        subject: formData.title,
+        to_name: 'Jay Munagala',
+        message: formData.message,
+        reply_to: formData.email,
+      };
+
+      // Send email using EmailJS
+      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+
+      setSubmitStatus('success');
+      setSubmitMessage('Thank you! Your message has been sent successfully. I\'ll get back to you soon.');
+      
+      // Clear form
+      setFormData({ name: '', email: '', title: '', message: '' });
+      
+    } catch (error) {
+      console.error('Email sending failed:', error);
+      setSubmitStatus('error');
+      setSubmitMessage('Oops! Something went wrong. Please try again or contact me directly via email.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const formFields = [
@@ -37,10 +96,17 @@ const Contact = () => {
       placeholder: 'Enter your email'
     },
     {
+      name: 'title',
+      label: 'Title',
+      type: 'input',
+      icon: MessageSquare,
+      placeholder: 'What would you like to discuss?'
+    },
+    {
       name: 'message',
       label: 'Message',
       type: 'textarea',
-      icon: MessageSquare,
+      icon: Mail,
       placeholder: 'Tell me about your project or just say hello...'
     }
   ];
@@ -235,31 +301,67 @@ const Contact = () => {
                 {/* Submit Button */}
                 <motion.button
                   type="submit"
+                  disabled={isLoading}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4, duration: 0.6 }}
-                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileHover={!isLoading ? { scale: 1.02, y: -2 } : {}}
                   whileTap={{ scale: 0.98 }}
-                  className="group relative w-full py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl text-white font-semibold text-lg hover:shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 overflow-hidden"
+                  className={`group relative w-full py-4 rounded-2xl text-white font-semibold text-lg transition-all duration-300 overflow-hidden ${
+                    isLoading 
+                      ? 'bg-gray-600 cursor-not-allowed' 
+                      : 'bg-gradient-to-r from-blue-500 to-purple-600 hover:shadow-2xl hover:shadow-blue-500/25'
+                  }`}
                 >
-                  <span className="relative z-10 flex items-center justify-center">
-                    Send Message
-                    <motion.div
-                      whileHover={{ x: 5 }}
-                      transition={{ type: "spring", stiffness: 400 }}
-                    >
-                      <Send size={20} className="ml-2" />
-                    </motion.div>
+                  <span className="relative z-10 flex items-center justify-center min-h-[28px]">
+                    {isLoading ? (
+                      <>
+                        <Loader size={20} className="mr-2 animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        Send Message
+                        <motion.div
+                          whileHover={{ x: 5 }}
+                          transition={{ type: "spring", stiffness: 400 }}
+                        >
+                          <Send size={20} className="ml-2" />
+                        </motion.div>
+                      </>
+                    )}
                   </span>
                   
                   {/* Animated background */}
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    initial={{ x: '-100%' }}
-                    whileHover={{ x: 0 }}
-                    transition={{ type: "spring", stiffness: 100 }}
-                  />
+                  {!isLoading && (
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      initial={{ x: '-100%' }}
+                      whileHover={{ x: 0 }}
+                      transition={{ type: "spring", stiffness: 100 }}
+                    />
+                  )}
                 </motion.button>
+
+                {/* Submit Status Message */}
+                {submitStatus !== 'idle' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className={`flex items-center p-4 rounded-2xl border ${
+                      submitStatus === 'success' 
+                        ? 'bg-green-900/20 border-green-500/30 text-green-400' 
+                        : 'bg-red-900/20 border-red-500/30 text-red-400'
+                    }`}
+                  >
+                    {submitStatus === 'success' ? (
+                      <CheckCircle size={20} className="mr-3 flex-shrink-0" />
+                    ) : (
+                      <AlertCircle size={20} className="mr-3 flex-shrink-0" />
+                    )}
+                    <p className="text-sm leading-relaxed">{submitMessage}</p>
+                  </motion.div>
+                )}
               </form>
             </motion.div>
 
