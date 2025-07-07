@@ -147,7 +147,7 @@ const Experience = () => {
           className="text-center mb-12 sm:mb-16"
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-            Experience as Software Engineer & Data Analyst
+            Experience
           </h2>
           <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto">
             Professional experience as Software Engineer, Student Assistant, and Web Developer developing patient analytics platforms, medical data visualization, and healthcare technology solutions
@@ -159,6 +159,7 @@ const Experience = () => {
           {experiences.map((exp, index) => (
             <motion.div
               key={index}
+              onClick={() => toggleExperience(index)}
               initial={{ opacity: 0, y: 60, scale: 0.95 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ 
@@ -173,7 +174,7 @@ const Experience = () => {
                 scale: 1.02,
                 transition: { duration: 0.3, type: "spring", stiffness: 300 }
               }}
-              className={`group relative bg-gray-900/80 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-gray-700 ${exp.borderColor} ${exp.shadowColor} transition-all duration-500 hover:bg-gray-900/90 overflow-hidden`}
+              className={`group relative bg-gray-900/80 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-gray-700 ${exp.borderColor} ${exp.shadowColor} transition-all duration-500 hover:bg-gray-900/90 overflow-hidden cursor-pointer`}
             >
               {/* Background gradient overlay */}
               <div className={`absolute inset-0 bg-gradient-to-br ${exp.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500 rounded-2xl`}></div>
@@ -196,14 +197,23 @@ const Experience = () => {
                     </motion.div>
                     
                     <div className="flex-1">
-                      <motion.h3 
+                      <motion.button
                         initial={{ x: -20 }}
                         whileInView={{ x: 0 }}
                         transition={{ delay: index * 0.1, duration: 0.5 }}
-                        className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors duration-300"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors duration-300 text-left w-full flex items-center justify-between cursor-pointer hover:text-blue-300"
                       >
-                        {exp.title}
-                      </motion.h3>
+                        <span>{exp.title}</span>
+                        <motion.div
+                          animate={{ rotate: expandedExperience === index ? 180 : 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="ml-4 flex-shrink-0"
+                        >
+                          <ChevronDown size={20} className="sm:w-6 sm:h-6" />
+                        </motion.div>
+                      </motion.button>
                       <motion.h4 
                         initial={{ x: -20 }}
                         whileInView={{ x: 0 }}
@@ -225,31 +235,15 @@ const Experience = () => {
                     </div>
                   </div>
                   
-                  {/* Expand/Collapse Button and Type Badge */}
-                  <div className="flex items-center gap-3">
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      whileInView={{ scale: 1 }}
-                      transition={{ delay: index * 0.2 + 0.3, duration: 0.4 }}
-                      className={`self-start lg:self-center px-3 sm:px-4 py-2 bg-gradient-to-r ${exp.gradient} bg-opacity-20 border border-opacity-30 rounded-full text-xs sm:text-sm font-semibold ${exp.responsibilities[0].color} backdrop-blur-sm`}
-                    >
-                      {exp.type}
-                    </motion.div>
-                    
-                    <motion.button
-                      onClick={() => toggleExperience(index)}
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.95 }}
-                      className={`p-3 rounded-xl bg-gradient-to-r ${exp.gradient} bg-opacity-20 border border-opacity-30 ${exp.responsibilities[0].color} hover:bg-opacity-30 transition-all duration-300 backdrop-blur-sm`}
-                      aria-label={expandedExperience === index ? "Collapse details" : "Expand details"}
-                    >
-                      {expandedExperience === index ? (
-                        <ChevronUp size={20} />
-                      ) : (
-                        <ChevronDown size={20} />
-                      )}
-                    </motion.button>
-                  </div>
+                  {/* Type Badge */}
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    transition={{ delay: index * 0.2 + 0.3, duration: 0.4 }}
+                    className={`self-start lg:self-center px-3 sm:px-4 py-2 bg-gradient-to-r ${exp.gradient} bg-opacity-20 border border-opacity-30 rounded-full text-xs sm:text-sm font-semibold ${exp.responsibilities[0].color} backdrop-blur-sm`}
+                  >
+                    {exp.type}
+                  </motion.div>
                 </div>
 
                 {/* Collapsible Responsibilities */}
@@ -307,6 +301,7 @@ const Experience = () => {
                     className="mt-4 text-center"
                   >
                     <p className="text-gray-500 text-sm">Click the arrow to view responsibilities and achievements</p>
+                    <p className="text-gray-500 text-sm">Click the job title to view responsibilities and achievements</p>
                   </motion.div>
                 )}
               </div>
