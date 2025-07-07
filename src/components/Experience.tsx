@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, MapPin, Users, Code, Database, Shield, Cpu, Cloud, Monitor, BookOpen, Award } from 'lucide-react';
+import { Calendar, MapPin, Users, Code, Database, Shield, Cpu, Cloud, Monitor, BookOpen, Award, ChevronUp, ChevronDown } from 'lucide-react';
 
 const Experience = () => {
+  const [expandedExperience, setExpandedExperience] = useState<number | null>(null);
+
+  const toggleExperience = (index: number) => {
+    setExpandedExperience(expandedExperience === index ? null : index);
+  };
+
   const experiences = [
     {
       title: "Student Assistant",
@@ -219,47 +225,90 @@ const Experience = () => {
                     </div>
                   </div>
                   
-                  {/* Type Badge */}
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    transition={{ delay: index * 0.2 + 0.3, duration: 0.4 }}
-                    className={`self-start lg:self-center px-3 sm:px-4 py-2 bg-gradient-to-r ${exp.gradient} bg-opacity-20 border border-opacity-30 rounded-full text-xs sm:text-sm font-semibold ${exp.responsibilities[0].color} backdrop-blur-sm`}
-                  >
-                    {exp.type}
-                  </motion.div>
-                </div>
-
-                {/* Responsibilities */}
-                <div className="space-y-4">
-                  <h5 className="text-base sm:text-lg font-semibold text-white mb-4">Key Responsibilities & Achievements:</h5>
-                  <div className="flex flex-col gap-3 sm:gap-4">
-                    {exp.responsibilities.map((resp, respIndex) => (
-                      <motion.div
-                        key={respIndex}
-                        initial={{ opacity: 0, x: -30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ 
-                          delay: index * 0.1 + respIndex * 0.1 + 0.4, 
-                          duration: 0.5 
-                        }}
-                        whileHover={{ x: 10, scale: 1.02 }}
-                        className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-gray-800/50 rounded-xl border border-gray-700/50 group-hover:border-gray-600/70 transition-all duration-300 hover:bg-gray-800/70"
-                      >
-                        <motion.div
-                          whileHover={{ scale: 1.2, rotate: 10 }}
-                          className={`flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br ${exp.gradient} bg-opacity-20 rounded-lg flex items-center justify-center border border-opacity-30 min-h-[40px] min-w-[40px]`}
-                          style={{ borderColor: resp.color.replace('text-', '') }}
-                        >
-                          <resp.icon size={20} className={`sm:w-6 sm:h-6 ${resp.color}`} />
-                        </motion.div>
-                        <p className="text-gray-300 leading-relaxed flex-1 text-sm sm:text-base self-center">
-                          {resp.text}
-                        </p>
-                      </motion.div>
-                    ))}
+                  {/* Expand/Collapse Button and Type Badge */}
+                  <div className="flex items-center gap-3">
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      whileInView={{ scale: 1 }}
+                      transition={{ delay: index * 0.2 + 0.3, duration: 0.4 }}
+                      className={`self-start lg:self-center px-3 sm:px-4 py-2 bg-gradient-to-r ${exp.gradient} bg-opacity-20 border border-opacity-30 rounded-full text-xs sm:text-sm font-semibold ${exp.responsibilities[0].color} backdrop-blur-sm`}
+                    >
+                      {exp.type}
+                    </motion.div>
+                    
+                    <motion.button
+                      onClick={() => toggleExperience(index)}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                      className={`p-3 rounded-xl bg-gradient-to-r ${exp.gradient} bg-opacity-20 border border-opacity-30 ${exp.responsibilities[0].color} hover:bg-opacity-30 transition-all duration-300 backdrop-blur-sm`}
+                      aria-label={expandedExperience === index ? "Collapse details" : "Expand details"}
+                    >
+                      {expandedExperience === index ? (
+                        <ChevronUp size={20} />
+                      ) : (
+                        <ChevronDown size={20} />
+                      )}
+                    </motion.button>
                   </div>
                 </div>
+
+                {/* Collapsible Responsibilities */}
+                <motion.div
+                  initial={false}
+                  animate={{ 
+                    height: expandedExperience === index ? "auto" : 0,
+                    opacity: expandedExperience === index ? 1 : 0
+                  }}
+                  transition={{ 
+                    duration: 0.3,
+                    ease: "easeInOut"
+                  }}
+                  className="overflow-hidden"
+                >
+                  <div className="space-y-4 pt-4">
+                    <h5 className="text-base sm:text-lg font-semibold text-white mb-4">Key Responsibilities & Achievements:</h5>
+                    <div className="flex flex-col gap-3 sm:gap-4">
+                      {exp.responsibilities.map((resp, respIndex) => (
+                        <motion.div
+                          key={respIndex}
+                          initial={{ opacity: 0, x: -30 }}
+                          animate={{ 
+                            opacity: expandedExperience === index ? 1 : 0, 
+                            x: expandedExperience === index ? 0 : -30 
+                          }}
+                          transition={{ 
+                            delay: expandedExperience === index ? respIndex * 0.1 : 0, 
+                            duration: 0.5 
+                          }}
+                          whileHover={{ x: 10, scale: 1.02 }}
+                          className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-gray-800/50 rounded-xl border border-gray-700/50 group-hover:border-gray-600/70 transition-all duration-300 hover:bg-gray-800/70"
+                        >
+                          <motion.div
+                            whileHover={{ scale: 1.2, rotate: 10 }}
+                            className={`flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br ${exp.gradient} bg-opacity-20 rounded-lg flex items-center justify-center border border-opacity-30 min-h-[40px] min-w-[40px]`}
+                            style={{ borderColor: resp.color.replace('text-', '') }}
+                          >
+                            <resp.icon size={20} className={`sm:w-6 sm:h-6 ${resp.color}`} />
+                          </motion.div>
+                          <p className="text-gray-300 leading-relaxed flex-1 text-sm sm:text-base self-center">
+                            {resp.text}
+                          </p>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Show hint when collapsed */}
+                {expandedExperience !== index && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="mt-4 text-center"
+                  >
+                    <p className="text-gray-500 text-sm">Click the arrow to view responsibilities and achievements</p>
+                  </motion.div>
+                )}
               </div>
 
               {/* Decorative elements */}
