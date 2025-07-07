@@ -6,6 +6,17 @@ const Projects = () => {
   const mainProjects = [
     {
       id: 1,
+      title: "Interview Intelligence Engine – AI Interview Coaching Web App",
+      description: "Full-stack platform that records interviews, transcribes responses with OpenAI Whisper, and delivers role-specific feedback using GPT-3.5. Features transcript editor, filler word/WPM analysis, downloadable PDF reports, guest use with onboarding, reset features, and privacy-first UX.",
+      image: "https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800",
+      tags: ["AI", "OpenAI", "React", "TypeScript", "Node.js"],
+      github: "https://github.com/JayReddyMunagala/Interview-Intelligence-Engine",
+      icon: Brain,
+      gradient: "from-emerald-500 to-teal-600",
+      featured: true
+    },
+    {
+      id: 2,
       title: "Resume Analyzer & Job Match Predictor",
       description: "AI powered tool that analyzes resumes and provides personalized career enhancement suggestions. Features semantic similarity scoring, ATS optimization, and intelligent job matching using advanced NLP techniques.",
       image: "https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -16,7 +27,7 @@ const Projects = () => {
       featured: true
     },
     {
-      id: 2,
+      id: 3,
       title: "ML Pipeline Dashboard", 
       description: "Comprehensive dashboard for data scientists to build, monitor, and manage machine learning workflows. Features real time pipeline tracking, model monitoring, and automated alerting system.",
       image: "https://images.pexels.com/photos/590020/pexels-photo-590020.jpeg?auto=compress&cs=tinysrgb&w=800",
