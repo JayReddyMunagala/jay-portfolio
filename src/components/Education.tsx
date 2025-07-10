@@ -13,9 +13,8 @@ const Education = () => {
       logoColor: "from-green-500 to-green-600",
       borderColor: "hover:border-green-500",
       textColor: "text-green-400",
-      description: "Pursuing advanced studies in machine learning, healthcare data analytics, and statistical modeling. Specializing in applying AI and data analytics techniques to healthcare systems and business intelligence solutions.",
-      description: "Pursuing advanced studies in machine learning, healthcare data analytics, and statistical modeling. Specializing in applying AI and data analytics techniques to healthcare systems and business intelligence solutions.",
-      highlights: ["Healthcare Data Analytics", "Machine Learning", "Statistical Modeling", "Business Intelligence"]
+      description: "Pursuing advanced studies in machine learning, statistical modeling, and data analytics as part of my Master’s in Advanced Data Analytics at UNT. Specializing in applying data-driven techniques to solve real-world business and technology problems.",
+      highlights: ["Data Analytics", "Machine Learning", "Statistical Modeling", "Business Intelligence"]
     },
     {
       degree: "Bachelor's in Computer Science",
