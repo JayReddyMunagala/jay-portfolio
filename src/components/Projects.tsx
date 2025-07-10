@@ -76,12 +76,8 @@ const Projects = () => {
           className="text-center mb-12 sm:mb-16 lg:mb-20"
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-            Projects & Development Portfolio
+            Projects
           </h2>
-          <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Software engineering projects showcasing expertise as Software Engineer, Student Assistant, 
-            Web Developer, and Data Analyst across healthcare analytics, ecommerce platforms, and ML powered tools
-          </p>
           <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mt-4 sm:mt-6 rounded-full"></div>
         </motion.div>
 
@@ -182,32 +178,33 @@ const Projects = () => {
                   </div>
 
                   {/* Tags */}
-                  <div className="flex flex-wrap gap-2 sm:gap-3">
-                    {project.tags.map((tag, tagIndex) => (
-                      <motion.span
-                        key={tag}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: index * 0.1 + tagIndex * 0.1 + 0.6, duration: 0.3 }}
-                        whileHover={{ scale: 1.1, y: -2 }}
-                        className={`px-3 sm:px-4 py-2 bg-gradient-to-r ${project.gradient} bg-opacity-20 border border-opacity-30 rounded-full text-xs sm:text-sm font-semibold text-blue-300 backdrop-blur-sm hover:bg-opacity-30 transition-all duration-300`}
-                      >
-                        {tag}
-                      </motion.span>
-                    ))}
-                  </div>
+<div className="flex flex-wrap gap-2 sm:gap-3">
+  {project.tags.map((tag, tagIndex) => (
+    <motion.span
+      key={tag}
+      initial={{ opacity: 0, scale: 0.8 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      transition={{ delay: index * 0.1 + tagIndex * 0.1 + 0.6, duration: 0.3 }}
+      whileHover={{ scale: 1.1, y: -2 }}
+      className={`px-3 sm:px-4 py-2 bg-gradient-to-r ${project.gradient} bg-opacity-20 border border-opacity-30 rounded-full text-xs sm:text-sm font-semibold text-black backdrop-blur-sm hover:bg-opacity-30 transition-all duration-300`}
+    >
+      {tag}
+    </motion.span>
+  ))}
+</div>
+
 
                   {/* Action Buttons */}
                   <div className="pt-4">
                     <motion.a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      className={`inline-flex items-center justify-center px-4 sm:px-6 py-3 bg-gradient-to-r ${project.gradient} text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300 group/btn text-sm sm:text-base min-h-[48px]`}
-                    >
-                      <Github size={18} className="mr-2 group-hover/btn:scale-110 transition-transform duration-300" />
+                       href={project.github}
+  target="_blank"
+  rel="noopener noreferrer"
+  whileHover={{ scale: 1.05, y: -2 }}
+  whileTap={{ scale: 0.95 }}
+  className={`inline-flex items-center justify-center px-4 sm:px-6 py-3 bg-gradient-to-r ${project.gradient} text-black font-semibold rounded-xl hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300 group/btn text-sm sm:text-base min-h-[48px]`}
+>
+  <Github size={18} className="mr-2 group-hover/btn:scale-110 transition-transform duration-300 text-black" />
                       View Code
                     </motion.a>
                   </div>
