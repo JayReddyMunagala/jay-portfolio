@@ -170,7 +170,7 @@ const About = () => {
             >
               {[
                 { icon: Code, label: "Full-Stack Engineer", color: "from-blue-500 to-blue-600" },
-                { icon: Heart, label: "Healthcare Technology", color: "from-red-500 to-pink-600" },
+                { icon: Rocket, label: "Web Designer", color: "from-red-500 to-pink-600" },
                 { icon: Brain, label: "Data Analytics", color: "from-purple-500 to-purple-600" },
                 { icon: Target, label: "Student Leadership", color: "from-green-500 to-emerald-600" }
               ].map((trait, index) => (
