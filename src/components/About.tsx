@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Briefcase, GraduationCap, Heart, Code, Globe, Brain, Target } from 'lucide-react';
+import { MapPin, Briefcase, Rocket, GraduationCap, Heart, Code, Globe, Brain, Target } from 'lucide-react';
 
 const About = () => {
   const journeySteps = [
