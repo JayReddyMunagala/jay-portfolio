@@ -132,7 +132,7 @@ const Hero = () => {
             transition={{ delay: 0.8, duration: 0.8 }}
             className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 mb-8 sm:mb-12 max-w-4xl leading-relaxed font-light px-4 text-center"
           >
-            Building scalable ecommerce systems, healthcare analytics platforms, and AI powered applications
+            "Engineered platforms. Creating AI. Designing tomorrow"
           </motion.p>
 
           {/* CTA Buttons */}
