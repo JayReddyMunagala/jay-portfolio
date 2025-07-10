@@ -143,7 +143,7 @@ const Contact = () => {
             Get In Touch
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Ready to collaborate on software engineering projects, healthcare analytics solutions, or data analysis initiatives? Let's connect and bring innovative ideas to life.
+           "Building smarter tech together. let’s connect if you're working where software, data, and creativity meet."
           </p>
           <p className="text-lg text-blue-400 font-semibold mt-4">
             Software Engineer • Data Analyst • Student Assistant • Web Developer
@@ -163,8 +163,7 @@ const Contact = () => {
               <div className="mb-8">
                 <h3 className="text-3xl font-bold text-white mb-4">Send me a message</h3>
                 <p className="text-gray-400 leading-relaxed">
-                  Whether you're looking to discuss software engineering opportunities, healthcare analytics projects, 
-                  ecommerce solutions, or data analytics collaborations, I'd love to connect with you.
+           "Whether you're exploring software engineering roles, healthcare analytics initiatives, eCommerce platforms, or data-driven collaborations. I’m always open to meaningful conversations and innovative partnerships."
                 </p>
               </div>
 
@@ -397,10 +396,7 @@ const Contact = () => {
           className="text-center mt-12 pt-12 border-t border-gray-700/50"
         >
           <p className="text-gray-400 mb-4">
-            © 2025 Jaya Prakash Reddy Munagala. Built with React, TypeScript, and lots of ☕
-          </p>
-          <p className="text-sm text-gray-500">
-            Designed and developed with passion for healthcare analytics and data-driven solutions
+          © 2025 Jaya Prakash Reddy Munagala. React + TypeScript + ☕ x 🍻 = Portfolio Magic.
           </p>
         </motion.div>
       </div>
