@@ -158,7 +158,7 @@ const About = () => {
                 className="flex items-center text-blue-400 font-semibold text-base sm:text-lg"
               >
                 <Target className="w-5 h-5 mr-2" />
-                Software Engineer & Data Analyst bridging healthcare technology and ecommerce innovation
+                "Software Engineer & Data Analyst building the future of tech through data and code"
               </motion.div>
             </div>
 
