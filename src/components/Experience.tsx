@@ -149,9 +149,6 @@ const Experience = () => {
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
             Experience
           </h2>
-          <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto">
-            Professional experience as Software Engineer, Student Assistant, and Web Developer developing patient analytics platforms, medical data visualization, and healthcare technology solutions
-          </p>
           <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mt-4 sm:mt-6 rounded-full"></div>
         </motion.div>
 
@@ -300,8 +297,8 @@ const Experience = () => {
                     animate={{ opacity: 1 }}
                     className="mt-4 text-center"
                   >
-                    <p className="text-gray-500 text-sm">Click the arrow to view responsibilities and achievements</p>
-                    <p className="text-gray-500 text-sm">Click the job title to view responsibilities and achievements</p>
+                    <p className="text-gray-500 text-sm"> </p>
+                    <p className="text-gray-500 text-sm"> </p>
                   </motion.div>
                 )}
               </div>
@@ -321,7 +318,7 @@ const Experience = () => {
           className="text-center mt-12 sm:mt-16"
         >
           <p className="text-gray-400 mb-4 sm:mb-6 text-sm sm:text-base">
-            Interested in collaborating on healthcare analytics projects or discussing my experience?
+          "Open to collaboration on data-driven projects, AI tools, or anything innovative.let’s build something great together!" 
           </p>
           <motion.a
             href="#contact"
