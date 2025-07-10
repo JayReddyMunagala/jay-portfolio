@@ -82,9 +82,6 @@ const Skills = () => {
           <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto">
             Core technologies for software engineering, data analytics, machine learning, and full stack development
           </p>
-          <p className="text-lg text-blue-400 font-semibold mt-4">
-            Software Engineer • Data Analyst • Student Assistant • Web Developer
-          </p>
         </motion.div>
 
         {/* Responsive Skills Grid */}
